@@ -22,16 +22,22 @@ define(["jquery", "knockout", "marker", 'lodash', 'utils', 'mapUtils', 'async!ht
     { title: 'TriBeCa Artsy Bachelor Pad', location: { lat: 40.7195264, lng: -74.0089934 }, visibility: ko.observable(true) },
     { title: 'Chinatown Homey Space', location: { lat: 40.7180628, lng: -73.9961237 }, visibility: ko.observable(true) }
   ];
-  var pointers = [];
+  var markers = [];
   this.filteredItems = this.locations;
 
-  this.markerClicked = function (index) {
-    var marker = utils.getMarker(pointers, index());
-    mapUtils.toggleBounce(marker, map, self);
+  this.markerOver = function (index) {
+    var marker = utils.getMarker(markers, index());
+    mapUtils.toggleBounce(marker, map);
   }
 
+  this.markerClicked = function (index) {
+    var marker = utils.getMarker(markers, index());
+    mapUtils.populateInfoWindow(marker, map)
+  }
+
+//populating all the markers on the map
   _.each(locations, function (location, index) {
-    mapUtils.addMarker(index, location, map, pointers)
+    mapUtils.addMarker(index, location, map, markers)
   });
 
 
@@ -39,8 +45,8 @@ define(["jquery", "knockout", "marker", 'lodash', 'utils', 'mapUtils', 'async!ht
     var filter = self.query().toLowerCase();
 
     if (!filter) {
-      //if there is empty string in search, showing all the pointers
-      _.each(pointers, function (pointer, key) { self.locations[key].visibility(true); return pointer.setVisible(true); })
+      //if there is empty string in search, showing all the markers
+      _.each(markers, function (pointer, key) { self.locations[key].visibility(true); return pointer.setVisible(true); })
       return self.locations;
 
     } else {
@@ -49,16 +55,17 @@ define(["jquery", "knockout", "marker", 'lodash', 'utils', 'mapUtils', 'async!ht
         i++;
         if (ko.utils.stringStartsWith(item.title.toLowerCase(), filter)) {
           //if title starts with the search terms
-          pointers[i - 1].setVisible(true);
+          markers[i - 1].setVisible(true);
           item.visibility(true);
         } else {
-          pointers[i - 1].setVisible(false);
+          markers[i - 1].setVisible(false);
           item.visibility(false);
         }
         return true;
       });
     }
   }, self)
+
 
   ko.applyBindings(this, $('html')[0]);
 });

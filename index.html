@@ -16,7 +16,7 @@
     <div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
       <ul class="nav navbar-nav" data-bind="foreach: filteredItems">
         <!--<li class="active"><a href="#">Home<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span></a></li>-->
-        <li><a data-bind="text: $data['title'],visible : $data['visibility'],event : {mouseover : function(data, event) { markerClicked($index, data, event); },mouseout : function(data, event) { markerClicked($index, data, event); }}">Home<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span></a>
+        <li><a data-bind="text: $data['title'],visible : $data['visibility'],event : {click : function(data, event) { markerClicked($index, data, event); },mouseover : function(data, event) { markerOver($index, data, event); },mouseout : function(data, event) { markerOver($index, data, event); }}">Home<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span></a>
           <!--<span data-bind="text: JSON.stringify($data)">hh</span>s-->
         </li>
       </ul>

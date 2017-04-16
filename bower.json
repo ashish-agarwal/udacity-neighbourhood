@@ -6,6 +6,7 @@
     "qunit": "~1.12.0",
     "knockout.js": "~2.3.0",
     "requirejs-plugins": "^1.0.3",
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.4",
+    "bootstrap": "^3.3.7"
   }
 }

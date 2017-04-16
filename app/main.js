@@ -1,62 +1,64 @@
 // to depend on a bower installed component:
 // define(['component/componentName/file'])
 
-define(["jquery", "knockout", "marker", 'lodash', 'utils', 'async!http://maps.google.com/maps/api/js?sensor=false',], function ($, ko, Marker, _, utils) {
-  var viewModel = {
-    status: ko.observable('active')
-  };
+define(["jquery", "knockout", "marker", 'lodash', 'utils', 'mapUtils', 'async!http://maps.google.com/maps/api/js?sensor=false'], function ($, ko, Marker, _, utils, mapUtils) {
+
   var self = this;
+  self.query = ko.observable("");
 
   var map = new google.maps.Map(document.getElementById('map'), {
     center: { lat: 40.7413549, lng: -73.9980244 },
-    zoom: 13
+    zoom: 12
   });
-
 
 
   // These are the real estate listings that will be shown to the user.
   // Normally we'd have these in a database instead.
-  var locations = [
-    { title: 'Park Ave Penthouse', location: { lat: 40.7713024, lng: -73.9632393 } },
-    { title: 'Chelsea Loft', location: { lat: 40.7444883, lng: -73.9949465 } },
-    { title: 'Union Square Open Floor Plan', location: { lat: 40.7347062, lng: -73.9895759 } },
-    { title: 'East Village Hip Studio', location: { lat: 40.7281777, lng: -73.984377 } },
-    { title: 'TriBeCa Artsy Bachelor Pad', location: { lat: 40.7195264, lng: -74.0089934 } },
-    { title: 'Chinatown Homey Space', location: { lat: 40.7180628, lng: -73.9961237 } }
+  self.locations = [
+    { title: 'Park Ave Penthouse', location: { lat: 40.7713024, lng: -73.9632393 }, visibility: ko.observable(true) },
+    { title: 'Chelsea Loft', location: { lat: 40.7444883, lng: -73.9949465 }, visibility: ko.observable(true) },
+    { title: 'Union Square Open Floor Plan', location: { lat: 40.7347062, lng: -73.9895759 }, visibility: ko.observable(true) },
+    { title: 'East Village Hip Studio', location: { lat: 40.7281777, lng: -73.984377 }, visibility: ko.observable(true) },
+    { title: 'TriBeCa Artsy Bachelor Pad', location: { lat: 40.7195264, lng: -74.0089934 }, visibility: ko.observable(true) },
+    { title: 'Chinatown Homey Space', location: { lat: 40.7180628, lng: -73.9961237 }, visibility: ko.observable(true) }
   ];
+  var pointers = [];
+  this.filteredItems = this.locations;
+
+  this.markerClicked = function (index) {
+    var marker = utils.getMarker(pointers, index());
+    mapUtils.toggleBounce(marker, map, self);
+  }
 
   _.each(locations, function (location, index) {
-    addMarker(index, location, map)
+    mapUtils.addMarker(index, location, map, pointers)
   });
-  var largeInfowindow = new google.maps.InfoWindow();
-
-  ko.applyBindings(viewModel, $('html')[0]);
 
 
-  function addMarker(key, location, map) {
-    // Add the marker at the clicked location, and add the next-available label
-    // from the array of alphabetical characters.
-    var marker = new google.maps.Marker({
-      position: location.location,
-      map: map,
-      animation: google.maps.Animation.DROP,
-      id: key
-    });
+  self.filteredItems = ko.computed(function (a) {
+    var filter = self.query().toLowerCase();
 
-    marker.addListener('click', toggleBounce);
-  }
+    if (!filter) {
+      //if there is empty string in search, showing all the pointers
+      _.each(pointers, function (pointer, key) { self.locations[key].visibility(true); return pointer.setVisible(true); })
+      return self.locations;
 
-  function toggleBounce() {
-    if (this.getAnimation() !== null) {
-      this.setAnimation(null);
     } else {
-      populateInfoWindow(this, largeInfowindow);
-      this.setAnimation(google.maps.Animation.BOUNCE);
+      var i = 0;
+      return ko.utils.arrayFilter(self.locations, function (item) {
+        i++;
+        if (ko.utils.stringStartsWith(item.title.toLowerCase(), filter)) {
+          //if title starts with the search terms
+          pointers[i - 1].setVisible(true);
+          item.visibility(true);
+        } else {
+          pointers[i - 1].setVisible(false);
+          item.visibility(false);
+        }
+        return true;
+      });
     }
-  }
+  }, self)
 
-  function populateInfoWindow(context, infoWindow) {
-    infoWindow.setContent(utils.getInfoWindownContent());
-    infoWindow.open(map, context)
-  }
+  ko.applyBindings(this, $('html')[0]);
 });

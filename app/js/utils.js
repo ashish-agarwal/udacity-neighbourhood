@@ -4,6 +4,9 @@ define(["knockout",
   'use strict';
 
   return {
+    getMarker: function (pointers, index) {
+      return _.find(pointers, function (pointer) { return pointer.get("id") === index })
+    },
     getInfoWindownContent: function () {
       return '<div id="content">' +
         '<div id="siteNotice">' +

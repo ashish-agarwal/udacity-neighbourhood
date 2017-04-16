@@ -5,15 +5,23 @@
   <meta charset="utf-8">
   <title>An awesome knockout.js app</title>
   <script data-main="app/config" src="bower_components/requirejs/require.js"></script>
+  <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
   <link rel="stylesheet" type="" href="app/css/style.css">
 </head>
 
 <body>
-  <!--<h1>neighbourhood running gsahgd!</h1>-->
-  <div>
-    Data Binding:
-    <span class="status" data-bind="text: status">Inactive</span>
-  </div>
+  <nav class="navbar navbar-default sidebar" role="navigation">
+    <input type="text" data-bind="value: query,valueUpdate : 'afterkeydown'">
+    <div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
+      <ul class="nav navbar-nav" data-bind="foreach: filteredItems">
+        <!--<li class="active"><a href="#">Home<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span></a></li>-->
+        <li><a data-bind="text: $data['title'],visible : $data['visibility'],event : {mouseover : function(data, event) { markerClicked($index, data, event); },mouseout : function(data, event) { markerClicked($index, data, event); }}">Home<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span></a>
+          <!--<span data-bind="text: JSON.stringify($data)">hh</span>s-->
+        </li>
+      </ul>
+    </div>
+  </nav>
   <div id="map"></div>
 </body>
 

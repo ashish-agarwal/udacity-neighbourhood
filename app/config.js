@@ -13,7 +13,9 @@ require.config({
       "async": 'bower_components/requirejs-plugins/src/async.js',
       "json": 'bower_components/requirejs-plugins/src/json',
       "lodash": "../bower_components/lodash/dist/lodash.min.js",
-      "utils": "js/utils"
+      "utils": "js/utils",
+      "mapUtils": "js/mapUtils",
+      "bootstrap": "../bower_components/bootstrap/dist/js/bootstrap.min.js"
     }
   }
 });

@@ -10,6 +10,7 @@ require.config({
       "knockout": "../bower_components/knockout.js/knockout",
       "ko": "../bower_components/knockout.js/knockout",
       "marker": "js/models/marker",
+      "text": 'bower_components/requirejs-plugins/lib/text.js',
       "async": 'bower_components/requirejs-plugins/src/async.js',
       "json": 'bower_components/requirejs-plugins/src/json',
       "lodash": "../bower_components/lodash/dist/lodash.min.js",

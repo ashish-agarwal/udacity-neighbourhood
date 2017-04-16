@@ -1,7 +1,7 @@
 // to depend on a bower installed component:
 // define(['component/componentName/file'])
 
-define(["jquery", "knockout", "marker", 'lodash', 'utils', 'mapUtils', 'async!http://maps.google.com/maps/api/js?sensor=false'], function ($, ko, Marker, _, utils, mapUtils) {
+define(["jquery", "knockout", "marker", 'lodash', 'utils', 'mapUtils', 'json!locations.json', 'async!http://maps.google.com/maps/api/js?sensor=false'], function ($, ko, Marker, _, utils, mapUtils, data) {
 
   var self = this;
   self.query = ko.observable("");
@@ -11,17 +11,9 @@ define(["jquery", "knockout", "marker", 'lodash', 'utils', 'mapUtils', 'async!ht
     zoom: 12
   });
 
+  //loading the locations from json file
+  self.locations = data.locations;
 
-  // These are the real estate listings that will be shown to the user.
-  // Normally we'd have these in a database instead.
-  self.locations = [
-    { title: 'Park Ave Penthouse', location: { lat: 40.7713024, lng: -73.9632393 }, visibility: ko.observable(true) },
-    { title: 'Chelsea Loft', location: { lat: 40.7444883, lng: -73.9949465 }, visibility: ko.observable(true) },
-    { title: 'Union Square Open Floor Plan', location: { lat: 40.7347062, lng: -73.9895759 }, visibility: ko.observable(true) },
-    { title: 'East Village Hip Studio', location: { lat: 40.7281777, lng: -73.984377 }, visibility: ko.observable(true) },
-    { title: 'TriBeCa Artsy Bachelor Pad', location: { lat: 40.7195264, lng: -74.0089934 }, visibility: ko.observable(true) },
-    { title: 'Chinatown Homey Space', location: { lat: 40.7180628, lng: -73.9961237 }, visibility: ko.observable(true) }
-  ];
   var markers = [];
   this.filteredItems = this.locations;
 
@@ -35,8 +27,9 @@ define(["jquery", "knockout", "marker", 'lodash', 'utils', 'mapUtils', 'async!ht
     mapUtils.populateInfoWindow(marker, map)
   }
 
-//populating all the markers on the map
+  //populating all the markers on the map
   _.each(locations, function (location, index) {
+    location.visibility = ko.observable(true);
     mapUtils.addMarker(index, location, map, markers)
   });
 

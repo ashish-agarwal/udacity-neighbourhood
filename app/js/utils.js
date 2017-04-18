@@ -7,7 +7,21 @@ define(["knockout",
     getMarker: function (pointers, index) {
       return _.find(pointers, function (pointer) { return pointer.get("id") === index })
     },
-    getInfoWindownContent: function () {
+    getInfoWindownContent: function (location, rating) {
+      return '<div id="content">' +
+        '<div id="siteNotice">' +
+        '</div>' +
+        '<h4   id="firstHeading" class="firstHeading">' + location.title + '</h4>' +
+        '<div id="bodyContent">' +
+        '<img id="plImage" />'+
+        '<p style="color:#' + rating.rating_color + '">Rating : ' + rating.aggregate_rating + '</p>' +
+        '</div>' +
+        '<div class="footer" style="text-align:right">' +
+        '<a href="http://www.zomato.com" >Powered by zomato</a>&<a href="http://www.flickr.com">Flickr</a>' +
+        '</div>' +
+        '</div>';
+    },
+    getInfoWindownContent1: function (location, ratings) {
       return '<div id="content">' +
         '<div id="siteNotice">' +
         '</div>' +

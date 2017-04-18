@@ -11,119 +11,126 @@ height: 100%;
 z-index: 1;
 }
 
+#wrapper {
+  padding-left: 250px;
+  transition: all 0.4s ease 0s;
+}
 
-  nav.sidebar, .main{
-    -webkit-transition: margin 200ms ease-out;
-      -moz-transition: margin 200ms ease-out;
-      -o-transition: margin 200ms ease-out;
-      transition: margin 200ms ease-out;
-  }
+#sidebar-wrapper {
+  margin-left: -250px;
+  top: 51px;
+  left: 250px;
+  width: 250px;
+  background: #000;
+  font-size: 15px;
+  position: fixed;
+  height: 100%;
+  overflow-y: auto;
+  z-index: 1000;
+  transition: all 0.4s ease 0s;
+}
 
-  .main{
-    padding: 10px 10px 0 10px;
-  }
+#wrapper.active {
+  padding-left: 0;
+}
 
- @media (min-width: 765px) {
+#wrapper.active #sidebar-wrapper {
+  left: 0;
+}
 
-    .main{
-      position: absolute;
-      width: calc(100% - 40px);
-      margin-left: 40px;
-      float: right;
-    }
+#page-content-wrapper {
+  width: 100%;
+  padding-top: 70px;
+  transition: all 0.4s ease 0s;
+}
 
-    nav.sidebar:hover + .main{
-      margin-left: 200px;
-    }
+.sidebar-nav {
+  position: absolute;
+  top: 0;
+  width: 250px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
 
-    nav.sidebar.navbar.sidebar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand {
-      margin-left: 0px;
-    }
+.sidebar-nav li {
+  line-height: 40px;
+  text-indent: 20px;
+}
 
-    nav.sidebar .navbar-brand, nav.sidebar .navbar-header{
-      text-align: center;
-      width: 100%;
-      margin-left: 0px;
-    }
+.sidebar-nav li a {
+  color: #999999;
+  display: block;
+  text-decoration: none;
+  padding-left: 60px;
+}
 
-    nav.sidebar a{
-      padding-right: 13px;
-    }
+.sidebar-nav li a span:before {
+  position: absolute;
+  left: 0;
+  color: #41484c;
+  text-align: center;
+  width: 20px;
+  line-height: 18px;
+}
 
-    nav.sidebar .navbar-nav > li:first-child{
-      border-top: 1px #e5e5e5 solid;
-    }
+.sidebar-nav li a:hover,
+.sidebar-nav li.active {
+  color: #fff;
+  background: rgba(255,255,255,0.2);
+  text-decoration: none;
+}
 
-    nav.sidebar .navbar-nav > li{
-      border-bottom: 1px #e5e5e5 solid;
-    }
+.sidebar-nav li a:active,
+.sidebar-nav li a:focus {
+  text-decoration: none;
+}
 
-    nav.sidebar .navbar-nav .open .dropdown-menu {
-      position: static;
-      float: none;
-      width: auto;
-      margin-top: 0;
-      background-color: transparent;
-      border: 0;
-      -webkit-box-shadow: none;
-      box-shadow: none;
-    }
+.sidebar-nav > .sidebar-brand {
+  height: 65px;
+  line-height: 60px;
+  font-size: 18px;
+}
 
-    nav.sidebar .navbar-collapse, nav.sidebar .container-fluid{
-      padding: 0 0px 0 0px;
-    }
+.sidebar-nav > .sidebar-brand a {
+  color: #999999;
+}
 
-    .navbar-inverse .navbar-nav .open .dropdown-menu>li>a {
-      color: #777;
-    }
+.sidebar-nav > .sidebar-brand a:hover {
+  color: #fff;
+  background: none;
+}
 
-    nav.sidebar{
-      width: 200px;
-      height: 100%;
-      margin-left: -160px;
-      float: left;
-      margin-bottom: 0px;
-    }
+#menu-toggle {
+    text-decoration: none;
+    float: left;
+    color: #fff;
+    padding-right: 15px;
+}
 
-    nav.sidebar li {
-      width: 100%;
-    }
+@media (max-width:767px) {
 
-    nav.sidebar:hover{
-      margin-left: 0px;
-    }
+#wrapper {
+  padding-left: 0;
+}
 
-    .forAnimate{
-      opacity: 0;
-    }
-  }
+#sidebar-wrapper {
+  left: 0;
+}
 
-  @media (min-width: 1330px) {
+#wrapper.active {
+  position: relative;
+  left: 250px;
+}
 
-    .main{
-      width: calc(100% - 200px);
-      margin-left: 200px;
-    }
+#wrapper.active #sidebar-wrapper {
+  left: 250px;
+  width: 250px;
+  transition: all 0.4s ease 0s;
+}
 
-    nav.sidebar{
-      margin-left: 0px;
-      float: left;
-    }
+#menu-toggle {
+  display: inline-block;
+}
 
-    nav.sidebar .forAnimate{
-      opacity: 1;
-    }
-  }
-
-  nav.sidebar .navbar-nav .open .dropdown-menu>li>a:hover, nav.sidebar .navbar-nav .open .dropdown-menu>li>a:focus {
-    color: #CCC;
-    background-color: transparent;
-  }
-
-  nav:hover .forAnimate{
-    opacity: 1;
-  }
-  section{
-    padding-left: 15px;
-  }
-
+}

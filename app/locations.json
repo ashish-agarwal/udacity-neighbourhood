@@ -1,45 +1,47 @@
   {
     "locations": [
       {
-        "title": "Park Ave Penthouse",
+        "title": "Green Bawarchi",
         "location": {
-          "lat": 40.7713024,
-          "lng": -73.9632393
+          "lat": 17.441768,
+          "lng": 78.362238
         }
       },
       {
-        "title": "Chelsea Loft",
+        "title": "Hyderabad House",
         "location": {
-          "lat": 40.7444883,
-          "lng": -73.9949465
+          "lat": 17.427258,
+          "lng": 78.343593
+        },
+        "wikipedia": "https://en.wikipedia.org/wiki/Hyderabad_House_(restaurant)"
+      },
+      {
+        "title": "Paradise food court",
+        "location": {
+          "lat": 17.450602,
+          "lng": 78.378967
+        },
+        "wikipedia": "https://en.wikipedia.org/wiki/Paradise_Hotel_(Hyderabad)"
+      },
+      {
+        "title": "Karachi Bakery",
+        "location": {
+          "lat": 17.443577,
+          "lng": 78.388664
         }
       },
       {
-        "title": "Union Square Open Floor Plan",
+        "title": "Country Oven",
         "location": {
-          "lat": 40.7347062,
-          "lng": -73.9895759
+          "lat": 17.441059,
+          "lng": 78.390810
         }
       },
       {
-        "title": "East Village Hip Studio",
+        "title": " The Grand Trunk road ",
         "location": {
-          "lat": 40.7281777,
-          "lng": -73.984377
-        }
-      },
-      {
-        "title": "TriBeCa Artsy Bachelor Pad",
-        "location": {
-          "lat": 40.7195264,
-          "lng": -74.0089934
-        }
-      },
-      {
-        "title": "Chinatown Homey Space",
-        "location": {
-          "lat": 40.7180628,
-          "lng": -73.9961237
+          "lat": 17.451899,
+          "lng": 78.385798
         }
       }
     ]

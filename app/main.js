@@ -1,7 +1,7 @@
 // to depend on a bower installed component:
 // define(['component/componentName/file'])
 
-define(["jquery", "knockout", 'lodash', 'utils', 'mapUtils', 'json!locations.json', 'zomato', 'flickr', 'async!http://maps.google.com/maps/api/js?sensor=false'], function ($, ko, _, utils, mapUtils, data, zomato, flickr) {
+define(["jquery", "knockout", 'lodash', 'utils', 'json!locations.json', 'zomato', 'flickr', 'Location', 'async!http://maps.google.com/maps/api/js?sensor=false'], function ($, ko, _, utils, data, zomato, flickr, Location) {
 
   var self = this;
   self.query = ko.observable("");
@@ -15,69 +15,38 @@ define(["jquery", "knockout", 'lodash', 'utils', 'mapUtils', 'json!locations.jso
   });
 
   //loading the locations from json file
-  self.locations = data.locations;
+  var locations = data.locations;
 
-  var markers = [];
-  this.filteredItems = this.locations;
+  this.locations = ko.observableArray([]);
 
-  this.markerOver = function (index) {
-    var marker = utils.getMarker(markers, index());
-    mapUtils.toggleBounce(marker, map);
-  }
+  locations.forEach(function (location) {
+    var loc = new Location(location, map);
+    this.locations.push(loc); // adds it to the observable array
+  })
 
-  this.markerClicked = function (index) {
-    var marker = utils.getMarker(markers, index());
-    map.panTo(marker.getPosition());
 
-    zomato.get(self.locations[index()])
-      .then(function (s) {
-        mapUtils.populateInfoWindow(marker, map, self.locations[index()], s.restaurants[0].restaurant.user_rating)
-        return flickr.get(self.locations[index()])
-      }).then(function (d) {
-        var fPhoto = d.photos.photo[0];
-        var imgUrl = 'https://farm' + fPhoto.farm + '.staticflickr.com/' + fPhoto.server + '/' + fPhoto.id + '_' + fPhoto.secret + '_' + 'q' + '.jpg';
-        $('#plImage').attr('src',imgUrl)
-      }).catch(function (err) {
-        mapUtils.populateInfoWindow(marker, map, self.locations[index()], { aggregate_rating: "N/A" })
-      })
-  }
-
-  //populating all the markers on the map
-  _.each(locations, function (location, index) {
-    location.visibility = ko.observable(true);
-    mapUtils.addMarker(index, location, map, markers)
-  });
-
-  self.filteredItems = ko.computed(function (a) {
+  self.filteredItems = ko.computed(function (item) {
     var filter = self.query().toLowerCase();
-
     if (!filter) {
-      //if there is empty string in search, showing all the markers
-      _.each(markers, function (pointer, key) { self.locations[key].visibility(true); return pointer.setVisible(true); })
-      return self.locations;
-
+      _.each(self.locations(), function (location) {
+        location.marker.setVisible(true)
+      })
+      return self.locations();
     } else {
-      var i = 0;
-      return ko.utils.arrayFilter(self.locations, function (item) {
-        i++;
-        if (ko.utils.stringStartsWith(item.title.toLowerCase(), filter)) {
-          //if title starts with the search terms
-          markers[i - 1].setVisible(true);
-          item.visibility(true);
-        } else {
-          markers[i - 1].setVisible(false);
-          item.visibility(false);
-        }
-        return true;
+      return _.filter(self.locations(), function (location, i) {
+        var visible = location.title.toLowerCase().indexOf(filter) !== -1;
+        location.marker.setVisible(visible); // set marker visibility
+        return visible; // filter functions expect a boolean
       });
     }
-  }, self)
+  });
 
   /*Menu-toggle*/
   $("#menu-toggle").click(function (e) {
     e.preventDefault();
     $("#wrapper").toggleClass("active");
   });
+
 
   ko.applyBindings(this, $('html')[0]);
 });

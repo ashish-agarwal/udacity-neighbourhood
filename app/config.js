@@ -1,3 +1,4 @@
+require.config({ catchError: true });
 require.config({
   // make bower_components more sensible
   // expose jquery
@@ -14,7 +15,7 @@ require.config({
       "json": 'bower_components/requirejs-plugins/src/json',
       "lodash": "../bower_components/lodash/dist/lodash.min.js",
       "utils": "js/utils",
-      "mapUtils": "js/mapUtils",
+      "Location": "js/location",
       "flickr": "js/services/flickr",
       "zomato": "js/services/zomato",
       "bootstrap": "../bower_components/bootstrap/dist/js/bootstrap.min.js"

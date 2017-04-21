@@ -3,6 +3,7 @@
 
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>An awesome knockout.js app</title>
   <script data-main="app/config" src="bower_components/requirejs/require.js"></script>
   <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
@@ -17,18 +18,11 @@
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container-fluid">
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-            aria-controls="navbar">
-        			<span class="sr-only">Toggle navigation</span>
-        			<span class="icon-bar"></span>
-        			<span class="icon-bar"></span>
-        			<span class="icon-bar"></span>
-    			</button>
           <div class="navbar-brand">
             <a id="menu-toggle" href="#" class="glyphicon glyphicon-align-justify btn-menu toggle">
               <i class="fa fa-bars"></i>
             </a>
-            <a href="#">My Neighbourhood</a>
+            <a href="#">My Neighbourhood </a>
           </div>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
@@ -42,9 +36,10 @@
     </nav>
     <div id="sidebar-wrapper">
       <nav id="spy">
+
         <ul class="sidebar-nav nav" data-bind="foreach: filteredItems">
           <li>
-            <a data-bind="text: $data['title'],visible : $data['visibility'],event : {click : function(data, event) { markerClicked($index, data, event); },mouseover : function(data, event) { markerOver($index, data, event); },mouseout : function(data, event) { markerOver($index, data, event); }}"></a>
+            <a data-bind="text: title,event: {click: showInfo}"></a>
           </li>
         </ul>
       </nav>

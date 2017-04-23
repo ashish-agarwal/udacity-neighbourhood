@@ -25,19 +25,19 @@
             <a href="#">My Neighbourhood </a>
           </div>
         </div>
-        <div id="navbar" class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li> <input style="margin:10px;border-radius:5px;font-size:16px;padding-left:10px" placeholder="search" type="text"
-                data-bind="value: query,valueUpdate : 'afterkeydown'"></li>
-          </ul>
-        </div>
+
         <!--/.nav-collapse -->
       </div>
     </nav>
     <div id="sidebar-wrapper">
       <nav id="spy">
-
-        <ul class="sidebar-nav nav" data-bind="foreach: filteredItems">
+        <ul class="sidebar-nav nav">
+          <li>
+            <input style="border-radius:5px;font-size:16px;padding-left:10px" placeholder="search" type="text"
+                data-bind="value: query,valueUpdate : 'afterkeydown'">
+          </li>
+        </ul>
+        <ul class="sidebar-nav s nav" data-bind="foreach: filteredItems">
           <li>
             <a data-bind="text: title,event: {click: showInfo}"></a>
           </li>

@@ -6,7 +6,7 @@ define(["jquery", "knockout", 'lodash', 'utils', 'json!locations.json', 'zomato'
   var self = this;
   self.query = ko.observable("");
 
-  var map = new google.maps.Map(document.getElementById('map'), {
+  window.map = new google.maps.Map(document.getElementById('map'), {
     center: {
       "lat": 17.446713,
       "lng": 78.387263
@@ -20,7 +20,7 @@ define(["jquery", "knockout", 'lodash', 'utils', 'json!locations.json', 'zomato'
   this.locations = ko.observableArray([]);
 
   locations.forEach(function (location) {
-    var loc = new Location(location, map);
+    var loc = new Location(location);
     this.locations.push(loc); // adds it to the observable array
   })
 

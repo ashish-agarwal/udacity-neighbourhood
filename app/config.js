@@ -36,6 +36,10 @@ require.config({
 });
 
 if (!window.requireTestMode) {
-  require(['main'], function () { });
+  require(['main'], function () { }, function (err) {
+    //display error to user
+    console.log(err);
+    alert('error in loading website');
+  });
 }
 
